@@ -29,6 +29,9 @@ func routes(app *config.AppConfig) http.Handler {
 	mux.Get("/", handlers.Repo.Home)
 	mux.Get("/about", handlers.Repo.About)
 	mux.Get("/divide", handlers.Repo.Divide)
+	mux.Get("/lakeside", handlers.Repo.LakeSide)
+	mux.Get("/mountains", handlers.Repo.Mountains)
+	mux.Get("/sky", handlers.Repo.FlorenceSky)
 
 	// Create a file server (place to go get static files from )
 	fileServer := http.FileServer(http.Dir("./static/"))

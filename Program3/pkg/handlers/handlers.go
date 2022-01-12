@@ -43,14 +43,23 @@ func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
 	//render.RenderTemplate(w, "home.page.tmpl") //Render the home page template, no data passed
 	render.RenderTemplate(w, "home.page.tmpl", &models.TemplateData{})
 
-	n, err := fmt.Fprintf(w, "This is the home page!")
-	fmt.Println("Bytes written:", n)
-	//To print with placeholders:
-	//fmt.Println(fmt.Sprintf("Number of of Bytes written: %d", n))
-
+	//n, err := fmt.Fprintf(w, "This is the home page!")
+	/*fmt.Println("Bytes written:", n)
 	if err != nil {
-		fmt.Println("There was an error:", err)
-	}
+	fmt.Println("There was an error:", err)
+	}*/
+}
+
+func (m *Repository) LakeSide(w http.ResponseWriter, r *http.Request) {
+	render.RenderTemplate(w, "lakeside.page.tmpl", &models.TemplateData{})
+}
+
+func (m *Repository) Mountains(w http.ResponseWriter, r *http.Request) {
+	render.RenderTemplate(w, "mountains.page.tmpl", &models.TemplateData{})
+}
+
+func (m *Repository) FlorenceSky(w http.ResponseWriter, r *http.Request) {
+	render.RenderTemplate(w, "sky.page.tmpl", &models.TemplateData{})
 }
 
 // About is the about page handler (the first thing to appear in a comment pertaining
@@ -68,16 +77,16 @@ func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
 	render.RenderTemplate(w, "about.page.tmpl", &models.TemplateData{
 		StringMap: stringMap, //Assign created stringMap to struct element StringMap
 	})
-	n, err := fmt.Fprintf(w, "This is the about page!")
-	fmt.Println("Bytes written:", n)
 
-	if err != nil {
+	/*n, err := fmt.Fprintf(w, "This is the about page!")
+		fmt.Println("Bytes written:", n)
+		if err != nil {
 		fmt.Println("There was an error:", err)
 	}
 
 	sum := addValues(2, 7)
 
-	fmt.Fprintf(w, fmt.Sprintf("The sum is: %d", sum))
+	fmt.Fprintf(w, fmt.Sprintf("The sum is: %d", sum))*/
 }
 
 // addValues simply adds two integers
