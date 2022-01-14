@@ -1,0 +1,107 @@
+{{template "base" .}}
+
+{{define "content"}}
+
+<div class="container">
+  <div class="row">
+    <!-- Rows have 12 columns, thus to center this we have a
+    3-6-3 column distribution! -->
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <h1 class="text-center mt-4">Reservation Page</h1>
+      <h2 class="text-center">Check Room Availability</h2>
+      <p class="text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      </div>
+    </div>
+
+    <form action="/reservation" method="get" >
+      <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label for="startDate" class="form-label">Starting Date</label>
+            <input type="date" class="form-control" name="startDate" id="startDate" aria-describedby="startDateHelp" required>
+            <div id="startDateHelp" class="form-text">Enter the starting date in the form of YYYY-MM-DD.</div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label for="endDate" class="form-label">Ending Date</label>
+            <input type="date" class="form-control" name="endDate" id="endDate" aria-describedby="endDateHelp" required>
+            <div id="endDateHelp" class="form-text">Enter the ending date in the form of YYYY-MM-DD.</div>
+          </div>
+        </div>
+      </div>
+      <div class="row text-center">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+          <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
+            <label class="form-check-label" for="exampleCheck1">I consent to the Terms and Conditions</label>
+          </div>
+          <button type="submit" class="btn btn-primary">Search Availability</button>
+        </div>
+      </div>
+    </form>
+
+    <br >
+    <br >
+    <hr >
+    <br >
+    <br >
+
+    <div class="row mt-6">
+      <div class="col-md-3"></div>
+      <div class="col-md-6">
+        <h2 class="text-center mt-8">Make reservation</h2>
+      </div>
+    </div>
+
+    <form method="post" action="" class="needs-validation" novalidate >
+      <div class="row mt-5">
+        <div class="col-md-2"></div>
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label for="firstName" class="form-label">First Name:</label>
+            <input type="text" class="form-control" name="firstName" id="firstName" required >
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label for="lastName" class="form-label">Last Name:</label>
+            <input type="text" class="form-control" name="lastName" id="lastName"  required>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-5">
+        <div class="col-md-2"></div>
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label for="email" class="form-label">Email Address:</label>
+            <input type="email" class="form-control" name="email" id="email" required placeholder="e.g.:myemailaddress@gmail.com">
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label for="phoneNum" class="form-label">Phone Number:</label>
+            <input type="tel" class="form-control" name="phoneNum" id="phoneNum" required placeholder="XXX XXX XXX XXX">
+          </div>
+        </div>
+      </div>
+      <div class="row text-center mt-6">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+          <br>
+          <button type="submit" class="btn btn-primary">Make Reservation</button>
+        </div>
+      </div>
+
+    </form>
+
+
+  </div>
+  {{end}}

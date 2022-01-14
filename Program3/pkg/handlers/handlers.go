@@ -62,6 +62,14 @@ func (m *Repository) FlorenceSky(w http.ResponseWriter, r *http.Request) {
 	render.RenderTemplate(w, "sky.page.tmpl", &models.TemplateData{})
 }
 
+func (m *Repository) Reservation(w http.ResponseWriter, r *http.Request) {
+	render.RenderTemplate(w, "reservation.page.tmpl", &models.TemplateData{})
+}
+
+func (m *Repository) Contact(w http.ResponseWriter, r *http.Request) {
+	render.RenderTemplate(w, "contact.page.tmpl", &models.TemplateData{})
+}
+
 // About is the about page handler (the first thing to appear in a comment pertaining
 // to a function is the function name)
 func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
