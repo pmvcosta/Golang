@@ -1,0 +1,25 @@
+.my-footer {
+  height: 5em;
+  background-color: #3d3d3d;
+  color: #ffffff;
+  font-size: 120%;
+  margin-top: 4.5em;
+  vertical-align: middle;
+  padding: 1em;
+}
+
+.room-image {
+  max-width: 50%;
+}
+
+.redText {
+  color: red;
+}
+
+.datepicker {
+  z-index: 10000;
+}
+
+.btn-outline-secondary:hover {
+  background: darkviolet;
+}

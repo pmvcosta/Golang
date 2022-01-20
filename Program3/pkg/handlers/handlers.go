@@ -1,8 +1,10 @@
 package handlers
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/pmvcosta/bookings/pkg/config"
@@ -41,7 +43,7 @@ func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
 	m.App.Session.Put(r.Context(), "remote_ip", remoteIP)
 
 	//render.RenderTemplate(w, "home.page.tmpl") //Render the home page template, no data passed
-	render.RenderTemplate(w, "home.page.tmpl", &models.TemplateData{})
+	render.RenderTemplate(w, r, "home.page.tmpl", &models.TemplateData{})
 
 	//n, err := fmt.Fprintf(w, "This is the home page!")
 	/*fmt.Println("Bytes written:", n)
@@ -51,23 +53,56 @@ func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Repository) LakeSide(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, "lakeside.page.tmpl", &models.TemplateData{})
+	render.RenderTemplate(w, r, "lakeside.page.tmpl", &models.TemplateData{})
 }
 
 func (m *Repository) Mountains(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, "mountains.page.tmpl", &models.TemplateData{})
+	render.RenderTemplate(w, r, "mountains.page.tmpl", &models.TemplateData{})
 }
 
 func (m *Repository) FlorenceSky(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, "sky.page.tmpl", &models.TemplateData{})
+	render.RenderTemplate(w, r, "sky.page.tmpl", &models.TemplateData{})
 }
 
 func (m *Repository) Reservation(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, "reservation.page.tmpl", &models.TemplateData{})
+	render.RenderTemplate(w, r, "reservation.page.tmpl", &models.TemplateData{})
+}
+
+func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
+	// Retrieving form input values!
+	// Default format of retrived values is string
+	start := r.Form.Get("start")
+	end := r.Form.Get("end")
+	w.Write([]byte("You have successfully booked this room from " + start + " to " + end))
+	//Can also use placeholders:
+	w.Write([]byte(fmt.Sprintf("\nStart date is %s and end date is %s.", start, end)))
+}
+
+//generate json interface
+// variable typeOfVar name-of-field-in-JSON
+type jsonResponse struct {
+	OK      bool   `json:"ok"`
+	Message string `json:"message"`
+}
+
+// AvailabilityJSON handles the request for availability and sends JSON response
+func (m *Repository) AvailabilityJSON(w http.ResponseWriter, r *http.Request) {
+	resp := jsonResponse{
+		OK:      true,
+		Message: "Available",
+	}
+
+	out, err := json.MarshalIndent(resp, "", "    ")
+	if err != nil {
+		log.Println(err)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(out)
 }
 
 func (m *Repository) Contact(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, "contact.page.tmpl", &models.TemplateData{})
+	render.RenderTemplate(w, r, "contact.page.tmpl", &models.TemplateData{})
 }
 
 // About is the about page handler (the first thing to appear in a comment pertaining
@@ -82,7 +117,7 @@ func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
 	stringMap["remote_ip"] = remoteIP
 
 	//render.RenderTemplate(w, "about.page.tmpl") //No data passed
-	render.RenderTemplate(w, "about.page.tmpl", &models.TemplateData{
+	render.RenderTemplate(w, r, "about.page.tmpl", &models.TemplateData{
 		StringMap: stringMap, //Assign created stringMap to struct element StringMap
 	})
 

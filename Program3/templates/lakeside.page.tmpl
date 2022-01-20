@@ -61,8 +61,44 @@
         <!-- This kind of button is more commonly used for form submissions
         <button type="button" class="btn btn-success">Make Reservation Now</button>
       -->
-      <a href="/about" class="btn btn-success mb-8">Check Availability</a>
+      <a id="check-availability-button" href="#!" class="btn btn-success mb-8">Check Availability</a>
     </div>
   </div>
 </div>
+{{end}}
+
+{{define "js" }}
+<!-- VanillaJS Datepicker -->
+<script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.2.0/dist/js/datepicker-full.min.js"></script>
+<script>
+document.getElementById('check-availability-button').addEventListener('click', function () {
+
+  let html = `
+  <form  id="check-availability-form" action="/reservation" method="get"  class="needs-validation" novalidate>
+  <div class="row">
+  <div class="col-md-1"></div>
+  <div class="col-md-10">
+  <div id="foo2" class="row">
+  <div class="col-md-6">
+  <input disabled class="form-control" type="text" name="start" id="start" required placeholder="Arrival Date">
+  </div>
+  <div class="col-md-6">
+  <input disabled class="form-control" type="text" name="end" id="end" required placeholder="Departure Date">
+  </div>
+  </div>
+  </div>
+  </div>
+  </form>
+  `;
+
+  notify('Checking availability...', 'success');
+
+  attention.custom({
+    title: `Here you go!`,
+    msg: html,
+  });
+
+});
+
+</script>
 {{end}}

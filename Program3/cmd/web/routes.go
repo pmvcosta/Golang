@@ -33,6 +33,9 @@ func routes(app *config.AppConfig) http.Handler {
 	mux.Get("/mountains", handlers.Repo.Mountains)
 	mux.Get("/sky", handlers.Repo.FlorenceSky)
 	mux.Get("/reservation", handlers.Repo.Reservation)
+	// Adding a post method to the reservations page
+	mux.Post("/reservation", handlers.Repo.PostReservation)
+	mux.Post("/reservation-json", handlers.Repo.AvailabilityJSON)
 	mux.Get("/contact", handlers.Repo.Contact)
 
 	// Create a file server (place to go get static files from )

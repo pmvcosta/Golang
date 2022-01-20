@@ -8,6 +8,7 @@ import (
 	"path/filepath"
 	"text/template"
 
+	"github.com/justinas/nosurf"
 	"github.com/pmvcosta/bookings/pkg/config"
 	"github.com/pmvcosta/bookings/pkg/models"
 )
@@ -21,14 +22,15 @@ func NewTemplates(a *config.AppConfig) {
 	app = a
 }
 
-func AddDefaultData(td *models.TemplateData) *models.TemplateData {
+func AddDefaultData(td *models.TemplateData, r *http.Request) *models.TemplateData {
 	//Add information to be available on every page
+	td.CSRFToken = nosurf.Token(r)
 	return td
 }
 
 //if name of func begins with lowercase letter, it is private
 //func renderTemplate(w http.ResponseWriter, tmpl string) {
-func RenderTemplate(w http.ResponseWriter, tmpl string, td *models.TemplateData) {
+func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, td *models.TemplateData) {
 
 	var tc map[string]*template.Template
 
@@ -50,7 +52,7 @@ func RenderTemplate(w http.ResponseWriter, tmpl string, td *models.TemplateData)
 	buf := new(bytes.Buffer)
 
 	//Introduce information meant to be available on every page
-	td = AddDefaultData(td)
+	td = AddDefaultData(td, r)
 
 	//_ = t.Execute(buf, nil) //execute value of template to buf, no data is passed
 	_ = t.Execute(buf, td)

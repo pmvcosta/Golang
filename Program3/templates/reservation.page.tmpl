@@ -15,7 +15,11 @@
       </div>
     </div>
 
-    <form action="/reservation" method="get" >
+    <form action="/reservation" method="post"  class="needs-validation" novalidate>
+      <!-- NoSurf requires the following hidden input
+        CSRFToken was added as a component of TemplateData
+      -->
+      <input type="text" name="csrf_token" value={{.CSRFToken}} hidden>
       <div class="row">
         <div class="col-md-2"></div>
         <div class="col-md-4">
@@ -33,6 +37,24 @@
           </div>
         </div>
       </div>
+
+      <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+          <div id="foo" class="row">
+            <div class="col-md-6">
+              <input class="form-control" type="text" name="start" required placeholder="Arrival Date">
+            </div>
+            <div class="col-md-6">
+              <input class="form-control" type="text" name="end" required placeholder="Departure Date">
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
       <div class="row text-center">
         <div class="col-md-4"></div>
         <div class="col-md-4">
@@ -58,7 +80,7 @@
       </div>
     </div>
 
-    <form method="post" action="" class="needs-validation" novalidate >
+    <form method="get" action="" class="needs-validation" novalidate >
       <div class="row mt-5">
         <div class="col-md-2"></div>
         <div class="col-md-4">
@@ -102,6 +124,78 @@
 
     </form>
 
+    <p>
+      <button id="colorButton" class="btn btn-outline-secondary">Click Me</button>
+    </p>
+
 
   </div>
   {{end}}
+
+  {{define "js" }}
+  <!-- VanillaJS Datepicker -->
+  <script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.2.0/dist/js/datepicker-full.min.js"></script>
+  <script>
+  document.getElementById('colorButton').addEventListener('click', function () {
+
+    let myEl = document.getElementById('theFooter');
+    if (myEl.classList.contains('redText')) {
+      myEl.classList.remove('redText');
+    } else {
+      myEl.classList.add('redText');
+    }
+
+    let html = `
+    <form  id="check-availability-form" action="/reservation" method="get"  class="needs-validation" novalidate>
+    <div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+    <div id="foo2" class="row">
+    <div class="col-md-6">
+    <input disabled class="form-control" type="text" name="start" id="start" required placeholder="Arrival Date">
+    </div>
+    <div class="col-md-6">
+    <input disabled class="form-control" type="text" name="end" id="end" required placeholder="Departure Date">
+    </div>
+    </div>
+    </div>
+    </div>
+    </form>
+    `;
+
+    notify('Changed color of footer text successfully!', 'success');
+    notifyModal('Success!', 'Changed color of footer text!', 'success', 'Cool');
+
+    //Using the previous implementation of attention.success()
+    //notifyModal('Success!', attention.success(), 'success', 'Cool');
+
+    attention.toast({
+      msg: 'Hello world!',
+      icon: 'error',
+    });
+
+    attention.success({
+      title: 'What is up, dog?',
+      msg: 'Not much, how about you?',
+    });
+
+    attention.error({
+      title: 'SH#T!',
+      msg: `Somethin' ain't right chief...`,
+    });
+
+    attention.custom({
+      title: `Here you go!`,
+      msg: html,
+    });
+
+  });
+
+  const elem = document.getElementById('foo');// VanillaJS DatePicker
+  const rangepicker = new DateRangePicker(elem, {
+    // ...options
+    format: 'dd/mm/yyyy',
+  });
+
+</script>
+{{end}}
