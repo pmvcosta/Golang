@@ -7,9 +7,9 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/pmvcosta/bookings/pkg/config"
-	"github.com/pmvcosta/bookings/pkg/models"
-	"github.com/pmvcosta/bookings/pkg/render"
+	"github.com/pmvcosta/bookings/internal/config"
+	"github.com/pmvcosta/bookings/internal/models"
+	"github.com/pmvcosta/bookings/internal/render"
 )
 
 //TemplateData is used by both render and handlers, thus it cannot be placed here

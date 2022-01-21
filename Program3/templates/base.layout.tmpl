@@ -243,22 +243,27 @@ function Prompt() {
       showCancelButton: true,
       focusConfirm: false,
       willOpen: () => {
-        const elem2 = document.getElementById('foo2');// VanillaJS DatePicker
-        const rangepicker2 = new DateRangePicker(elem2, {
-          format: 'dd/mm/yyyy',
-          showOnFocus: true,
-          autohide: true,
-          orientation: 'left top',
-        });
+        // Check if we are passing a willOpen argument
+        if (c.willOpen !== undefined) {
+          // Run it, if it is present
+          c.willOpen();
+        }
       },
+
       didOpen: () => {
-        document.getElementById('start').removeAttribute('disabled');
-        document.getElementById('end').removeAttribute('disabled');
+        // Check if we are passing a didOpen argument
+        if (c.didOpen !== undefined) {
+          // Run it, if it is present
+          c.didOpen();
+        }
       },
-      preConfirm: () =>  [
-          document.getElementById('start').value,
-          document.getElementById('end').value,
-        ],
+
+      preConfirm: () => {
+        if (c.preConfirm !== undefined) {
+          return c.preConfirm();
+        }
+      },
+
     });
 
     //Check if there is a result

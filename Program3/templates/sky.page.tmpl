@@ -96,6 +96,27 @@ document.getElementById('check-availability-button').addEventListener('click', f
   attention.custom({
     title: `Here you go!`,
     msg: html,
+
+    willOpen: () => {
+      const elem2 = document.getElementById('foo2');// VanillaJS DatePicker
+      const rangepicker2 = new DateRangePicker(elem2, {
+        format: 'dd/mm/yyyy',
+        showOnFocus: true,
+        autohide: false,
+        orientation: 'left top',
+      });
+    },
+
+    didOpen: () => {
+      document.getElementById('start').removeAttribute('disabled');
+      document.getElementById('end').removeAttribute('disabled');
+    },
+
+    preConfirm: () =>  [
+        document.getElementById('start').value,
+        document.getElementById('end').value,
+    ],
+
     callback: function (formValues) {
       console.log("Called!");
 
