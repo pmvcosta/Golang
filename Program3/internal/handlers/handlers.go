@@ -8,6 +8,7 @@ import (
 	"net/http"
 
 	"github.com/pmvcosta/bookings/internal/config"
+	"github.com/pmvcosta/bookings/internal/forms"
 	"github.com/pmvcosta/bookings/internal/models"
 	"github.com/pmvcosta/bookings/internal/render"
 )
@@ -65,10 +66,13 @@ func (m *Repository) FlorenceSky(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Repository) Reservation(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, r, "reservation.page.tmpl", &models.TemplateData{})
+	render.RenderTemplate(w, r, "reservation.page.tmpl", &models.TemplateData{
+		Form: forms.New(nil),
+	})
 }
 
-func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
+// PostReservation handles the posting of a reservation form
+func (m *Repository) PostAvailability(w http.ResponseWriter, r *http.Request) {
 	// Retrieving form input values!
 	// Default format of retrived values is string
 	start := r.Form.Get("start")
@@ -76,6 +80,54 @@ func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("You have successfully booked this room from " + start + " to " + end))
 	//Can also use placeholders:
 	w.Write([]byte(fmt.Sprintf("\nStart date is %s and end date is %s.", start, end)))
+
+}
+
+func (m *Repository) MakeReservation(w http.ResponseWriter, r *http.Request) {
+	render.RenderTemplate(w, r, "make-reservation.page.tmpl", &models.TemplateData{
+		Form: forms.New(nil),
+	})
+}
+
+// PostReservation handles the posting of a reservation form
+func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
+
+	// Good practice when parsing form data
+	err := r.ParseForm()
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	// Use the Reservation object created in models.go
+	reservation := models.Reservation{
+		FirstName: r.Form.Get("firstName"),
+		LastName:  r.Form.Get("lastName"),
+		Phone:     r.Form.Get("phoneNum"),
+		Email:     r.Form.Get("email"),
+	}
+
+	// Create new form object (r.PostForm is of type url.values)
+	form := forms.New(r.PostForm)
+
+	// Check integrity of form data
+	// Following checks add errors to Form if fields are empty...
+	form.Has("firstName", r) // Check if form has a non-nil value for firstName
+	form.Has("lastName", r)
+	form.Has("phoneNum", r)
+	form.Has("email", r)
+
+	if !form.Valid() {
+		data := make(map[string]interface{})
+		data["reservation"] = reservation
+
+		// Re-render page with existing information/data and form
+		render.RenderTemplate(w, r, "make-reservation.page.tmpl", &models.TemplateData{
+			Form: form,
+			Data: data,
+		})
+	}
+
 }
 
 //generate json interface

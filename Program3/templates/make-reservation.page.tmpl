@@ -1,0 +1,77 @@
+{{template "base" .}}
+
+{{define "content"}}
+
+<div class="container">
+  <div class="row">
+    <!-- Rows have 12 columns, thus to center this we have a
+    3-6-3 column distribution! -->
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <h1 class="text-center mt-4">Make Reservation Page</h1>
+      <h2 class="text-center">Book your spot here!</h2>
+      <p class="text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      </div>
+    </div>
+
+    <form method="post" action="" class="" novalidate >
+      <!-- NoSurf requires the following hidden input
+        CSRFToken was added as a component of TemplateData
+      -->
+      <input type="text" name="csrf_token" value={{.CSRFToken}} hidden>
+
+      <div class="row mt-5">
+        <div class="col-md-2"></div>
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label for="firstName" class="form-label">First Name:</label>
+            <input type="text" class="form-control {{with .Form.Errors.Get "firstName"}} is-invalid {{end}}" name="firstName" id="firstName" required >
+            {{with .Form.Errors.Get "firstName"}}
+              <label class="text-danger">{{.}}</label>
+            {{end}}
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label for="lastName" class="form-label">Last Name:</label>
+            <input type="text" class="form-control" name="lastName" id="lastName"  required>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-5">
+        <div class="col-md-2"></div>
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label for="email" class="form-label">Email Address:</label>
+            <input type="email" class="form-control" name="email" id="email" required placeholder="e.g.:myemailaddress@gmail.com">
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label for="phoneNum" class="form-label">Phone Number:</label>
+            <input type="tel" class="form-control" name="phoneNum" id="phoneNum" required placeholder="XXX XXX XXX XXX">
+          </div>
+        </div>
+      </div>
+      <div class="row text-center mt-6">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+          <br>
+          <button type="submit" class="btn btn-primary">Make Reservation</button>
+        </div>
+      </div>
+
+    </form>
+
+  </div>
+  {{end}}
+
+  {{define "js" }}
+  <!-- VanillaJS Datepicker -->
+  <script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.2.0/dist/js/datepicker-full.min.js"></script>
+
+{{end}}
