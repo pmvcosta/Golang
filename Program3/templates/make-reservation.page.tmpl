@@ -15,6 +15,8 @@
       </div>
     </div>
 
+    {{$res := index .Data "reservation"}}
+
     <form method="post" action="" class="" novalidate >
       <!-- NoSurf requires the following hidden input
         CSRFToken was added as a component of TemplateData
@@ -26,7 +28,8 @@
         <div class="col-md-4">
           <div class="mb-3">
             <label for="firstName" class="form-label">First Name:</label>
-            <input type="text" class="form-control {{with .Form.Errors.Get "firstName"}} is-invalid {{end}}" name="firstName" id="firstName" required >
+            <input type="text" class="form-control {{with .Form.Errors.Get "firstName"}} is-invalid {{end}}"
+              name="firstName" id="firstName" value="{{$res.FirstName}}" required >
             {{with .Form.Errors.Get "firstName"}}
               <label class="text-danger">{{.}}</label>
             {{end}}
@@ -36,7 +39,11 @@
         <div class="col-md-4">
           <div class="mb-3">
             <label for="lastName" class="form-label">Last Name:</label>
-            <input type="text" class="form-control" name="lastName" id="lastName"  required>
+            <input type="text" class="form-control {{with .Form.Errors.Get "lastName"}} is-invalid {{end}}"
+             name="lastName" id="lastName" value="{{$res.LastName}}"  required>
+            {{with .Form.Errors.Get "lastName"}}
+              <label class="text-danger">{{.}}</label>
+            {{end}}
           </div>
         </div>
       </div>
@@ -46,14 +53,22 @@
         <div class="col-md-4">
           <div class="mb-3">
             <label for="email" class="form-label">Email Address:</label>
-            <input type="email" class="form-control" name="email" id="email" required placeholder="e.g.:myemailaddress@gmail.com">
+            <input type="email" class="form-control {{with .Form.Errors.Get "email"}} is-invalid {{end}}"
+             name="email" id="email" value="{{$res.Email}}" required placeholder="e.g.:myemailaddress@gmail.com">
+            {{with .Form.Errors.Get "email"}}
+              <label class="text-danger">{{.}}</label>
+            {{end}}
           </div>
         </div>
 
         <div class="col-md-4">
           <div class="mb-3">
             <label for="phoneNum" class="form-label">Phone Number:</label>
-            <input type="tel" class="form-control" name="phoneNum" id="phoneNum" required placeholder="XXX XXX XXX XXX">
+            <input type="tel" class="form-control {{with .Form.Errors.Get "phoneNum"}} is-invalid {{end}}"
+             name="phoneNum" id="phoneNum" value="{{$res.Phone}}" required placeholder="XXX XXX XXX XXX">
+            {{with .Form.Errors.Get "phoneNum"}}
+              <label class="text-danger">{{.}}</label>
+            {{end}}
           </div>
         </div>
       </div>
